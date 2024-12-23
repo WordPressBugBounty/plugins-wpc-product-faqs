@@ -3,7 +3,7 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.2
+Version: 2.2.3
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
@@ -12,15 +12,18 @@ Requires Plugins: woocommerce
 Requires at least: 4.0
 Tested up to: 6.7
 WC requires at least: 3.0
-WC tested up to: 9.3
+WC tested up to: 9.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.2' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.3' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
+! defined( 'WPCPF_DIR' ) && define( 'WPCPF_DIR', plugin_dir_path( __FILE__ ) );
 ! defined( 'WPCPF_REVIEWS' ) && define( 'WPCPF_REVIEWS', 'https://wordpress.org/support/plugin/wpc-product-faqs/reviews/?filter=5' );
 ! defined( 'WPCPF_CHANGELOG' ) && define( 'WPCPF_CHANGELOG', 'https://wordpress.org/plugins/wpc-product-faqs/#developers' );
 ! defined( 'WPCPF_DISCUSSION' ) && define( 'WPCPF_DISCUSSION', 'https://wordpress.org/support/plugin/wpc-product-faqs' );
@@ -34,9 +37,6 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 	add_action( 'plugins_loaded', 'wpcpf_init', 11 );
 
 	function wpcpf_init() {
-		// load text-domain
-		load_plugin_textdomain( 'wpc-product-faqs', false, basename( __DIR__ ) . '/languages/' );
-
 		if ( ! function_exists( 'WC' ) || ! version_compare( WC()->version, '3.0', '>=' ) ) {
 			add_action( 'admin_notices', 'wpcpf_notice_wc' );
 
@@ -88,6 +88,9 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 				}
 
 				function init() {
+					// load text-domain
+					load_plugin_textdomain( 'wpc-product-faqs', false, basename( WPCPF_DIR ) . '/languages/' );
+
 					$labels = [
 						'name'          => _x( 'Product FAQs', 'Post Type General Name', 'wpc-product-faqs' ),
 						'singular_name' => _x( 'Product FAQ', 'Post Type Singular Name', 'wpc-product-faqs' ),
