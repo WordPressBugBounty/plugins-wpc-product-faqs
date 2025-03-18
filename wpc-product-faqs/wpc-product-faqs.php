@@ -3,7 +3,7 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.3
+Version: 2.2.4
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
@@ -12,14 +12,14 @@ Requires Plugins: woocommerce
 Requires at least: 4.0
 Tested up to: 6.7
 WC requires at least: 3.0
-WC tested up to: 9.5
+WC tested up to: 9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.3' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.4' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -168,7 +168,8 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 									}
 									?>
                                     <label>
-                                        <select class="wpcpf_terms_select" multiple="multiple" name="wpcpf_terms[]" data-<?php echo esc_attr( $type ); ?>="<?php echo esc_attr( implode( ',', $terms ) ); ?>">
+                                        <select class="wpcpf_terms_select" multiple="multiple" name="wpcpf_terms[]"
+                                                data-<?php echo esc_attr( $type ); ?>="<?php echo esc_attr( implode( ',', $terms ) ); ?>">
 											<?php
 											if ( ! empty( $terms ) ) {
 												foreach ( $terms as $t ) {
@@ -259,20 +260,26 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                             <p>
 								<?php printf( /* translators: stars */ esc_html__( 'Thank you for using our plugin! If you are satisfied, please reward it a full five-star %s rating.', 'wpc-product-faqs' ), '<span style="color:#ffb900">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' ); ?>
                                 <br/>
-                                <a href="<?php echo esc_url( WPCPF_REVIEWS ); ?>" target="_blank"><?php esc_html_e( 'Reviews', 'wpc-product-faqs' ); ?></a> |
-                                <a href="<?php echo esc_url( WPCPF_CHANGELOG ); ?>" target="_blank"><?php esc_html_e( 'Changelog', 'wpc-product-faqs' ); ?></a> |
-                                <a href="<?php echo esc_url( WPCPF_DISCUSSION ); ?>" target="_blank"><?php esc_html_e( 'Discussion', 'wpc-product-faqs' ); ?></a>
+                                <a href="<?php echo esc_url( WPCPF_REVIEWS ); ?>"
+                                   target="_blank"><?php esc_html_e( 'Reviews', 'wpc-product-faqs' ); ?></a> |
+                                <a href="<?php echo esc_url( WPCPF_CHANGELOG ); ?>"
+                                   target="_blank"><?php esc_html_e( 'Changelog', 'wpc-product-faqs' ); ?></a> |
+                                <a href="<?php echo esc_url( WPCPF_DISCUSSION ); ?>"
+                                   target="_blank"><?php esc_html_e( 'Discussion', 'wpc-product-faqs' ); ?></a>
                             </p>
                         </div>
                         <div class="wpclever_settings_page_nav">
                             <h2 class="nav-tab-wrapper">
-                                <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-wpcpf&tab=how' ) ); ?>" class="<?php echo esc_attr( $active_tab === 'how' ? 'nav-tab nav-tab-active' : 'nav-tab' ); ?>">
+                                <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-wpcpf&tab=how' ) ); ?>"
+                                   class="<?php echo esc_attr( $active_tab === 'how' ? 'nav-tab nav-tab-active' : 'nav-tab' ); ?>">
 									<?php esc_html_e( 'How to use?', 'wpc-product-faqs' ); ?>
                                 </a>
-                                <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=wpc_product_faq' ) ); ?>" class="nav-tab">
+                                <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=wpc_product_faq' ) ); ?>"
+                                   class="nav-tab">
 									<?php esc_html_e( 'Global FAQs', 'wpc-product-faqs' ); ?>
                                 </a>
-                                <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-kit' ) ); ?>" class="nav-tab">
+                                <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-kit' ) ); ?>"
+                                   class="nav-tab">
 									<?php esc_html_e( 'Essential Kit', 'wpc-product-faqs' ); ?>
                                 </a>
                             </h2>
@@ -295,13 +302,17 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                             </div>
                             <div class="wpclever_settings_page_suggestion_content">
                                 <div>
-                                    To display custom engaging real-time messages on any wished positions, please install
-                                    <a href="https://wordpress.org/plugins/wpc-smart-messages/" target="_blank">WPC Smart Messages</a> plugin. It's free!
+                                    To display custom engaging real-time messages on any wished positions, please
+                                    install
+                                    <a href="https://wordpress.org/plugins/wpc-smart-messages/" target="_blank">WPC
+                                        Smart Messages</a> plugin. It's free!
                                 </div>
                                 <div>
                                     Wanna save your precious time working on variations? Try our brand-new free plugin
-                                    <a href="https://wordpress.org/plugins/wpc-variation-bulk-editor/" target="_blank">WPC Variation Bulk Editor</a> and
-                                    <a href="https://wordpress.org/plugins/wpc-variation-duplicator/" target="_blank">WPC Variation Duplicator</a>.
+                                    <a href="https://wordpress.org/plugins/wpc-variation-bulk-editor/" target="_blank">WPC
+                                        Variation Bulk Editor</a> and
+                                    <a href="https://wordpress.org/plugins/wpc-variation-duplicator/" target="_blank">WPC
+                                        Variation Duplicator</a>.
                                 </div>
                             </div>
                         </div>
@@ -373,14 +384,20 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                     <div class="wpcpf-faq">
                         <span class="wpcpf-faq-move button"><?php esc_attr_e( 'Move', 'wpc-product-faqs' ); ?></span>
                         <span class="wpcpf-faq-label">#<?php echo esc_attr( $faq['type'] ); ?></span>
-                        <input class="wpcpf-faq-remove button" type="button" value="<?php esc_attr_e( 'Remove', 'wpc-product-faqs' ); ?>"/>
+                        <input class="wpcpf-faq-remove button" type="button"
+                               value="<?php esc_attr_e( 'Remove', 'wpc-product-faqs' ); ?>"/>
 						<?php
 						if ( $faq['type'] === 'custom' ) {
 							$editor_id = ! empty( $faq['editor'] ) ? $faq['editor'] : 'wpcpf-editor-' . $key; ?>
                             <div class="wpcpf-faq-line">
-                                <input type="hidden" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][type]' ); ?>" value="<?php echo esc_attr( $faq['type'] ); ?>"/>
+                                <input type="hidden" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][type]' ); ?>"
+                                       value="<?php echo esc_attr( $faq['type'] ); ?>"/>
                                 <label>
-                                    <input type="text" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][title]' ); ?>" placeholder="<?php esc_attr_e( 'FAQ title', 'wpc-product-faqs' ); ?>" style="width: 100%" value="<?php echo esc_attr( $faq['title'] ); ?>" required/>
+                                    <input type="text"
+                                           name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][title]' ); ?>"
+                                           placeholder="<?php esc_attr_e( 'FAQ title', 'wpc-product-faqs' ); ?>"
+                                           style="width: 100%" value="<?php echo esc_attr( $faq['title'] ); ?>"
+                                           required/>
                                 </label>
                             </div>
                             <div class="wpcpf-faq-line">
@@ -397,9 +414,11 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                             </div>
 						<?php } else { ?>
                             <div class="wpcpf-faq-line">
-                                <input type="hidden" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][type]' ); ?>" value="<?php echo esc_attr( $faq['type'] ); ?>"/>
+                                <input type="hidden" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][type]' ); ?>"
+                                       value="<?php echo esc_attr( $faq['type'] ); ?>"/>
                                 <label>
-                                    <select class="wpcpf-faq-search" multiple="multiple" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][title][]' ); ?>">
+                                    <select class="wpcpf-faq-search" multiple="multiple"
+                                            name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][title][]' ); ?>">
 										<?php
 										if ( ! is_array( $faq['title'] ) ) {
 											$selected_faqs = explode( ',', $faq['title'] );
@@ -416,7 +435,9 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 										}
 										?>
                                     </select> </label>
-                                <input type="hidden" name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][content]' ); ?>" value="auto"/>
+                                <input type="hidden"
+                                       name="<?php echo esc_attr( 'wpcpf_faqs[' . $key . '][content]' ); ?>"
+                                       value="auto"/>
                             </div>
 						<?php } ?>
                     </div>
@@ -430,7 +451,8 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                                 <option value="global"><?php esc_html_e( 'Global FAQ', 'wpc-product-faqs' ); ?></option>
                                 <option value="custom"><?php esc_html_e( 'Custom FAQ', 'wpc-product-faqs' ); ?></option>
                             </select> </label>
-                        <input type="button" class="button wpcpf-add" value="<?php esc_attr_e( '+ Add new FAQ', 'wpc-product-faqs' ); ?>"/>
+                        <input type="button" class="button wpcpf-add"
+                               value="<?php esc_attr_e( '+ Add new FAQ', 'wpc-product-faqs' ); ?>"/>
                     </div>
 					<?php
 				}
@@ -686,7 +708,8 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 					?>
                     <div id='wpcpf_settings' class='panel woocommerce_options_panel wpcpf_settings'>
                         <div class="wpcpf-global">
-                            <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=wpc_product_faq' ) ); ?>" target="_blank"><?php esc_html_e( 'Manage Global FAQs', 'wpc-product-faqs' ); ?></a>
+                            <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=wpc_product_faq' ) ); ?>"
+                               target="_blank"><?php esc_html_e( 'Manage Global FAQs', 'wpc-product-faqs' ); ?></a>
                         </div>
                         <div class="wpcpf-global">
 							<?php echo sprintf( /* translators: shortcode */ esc_html__( 'You can use the shortcode %s to show this product FAQs.', 'wpc-product-faqs' ), '<strong>[wpcpf id="' . esc_attr( $product_id ) . '"]</strong>' ); ?>
