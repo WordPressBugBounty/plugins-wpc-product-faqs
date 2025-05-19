@@ -3,23 +3,23 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.4
+Version: 2.2.5
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
 Domain Path: /languages/
 Requires Plugins: woocommerce
 Requires at least: 4.0
-Tested up to: 6.7
+Tested up to: 6.8
 WC requires at least: 3.0
-WC tested up to: 9.7
+WC tested up to: 9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.4' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.5' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -655,19 +655,25 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 					}
 
 					if ( ! empty( $faqs ) ) {
-						$content .= '<div class="wpcpf-faqs">';
+						$faq_items = [];
+						$search    = [ '[wpcpf', '[wpc_product_faqs' ];
+						$replace   = [ '[_wpcpf', '[_wpc_product_faqs' ];
 
 						foreach ( $faqs as $faq ) {
-							$faq['content'] = str_replace( '[wpcpf', '[wpcpf_ignored', $faq['content'] );
-							$faq['content'] = str_replace( '[wpc_product_faqs', '[wpc_product_faqs_ignored', $faq['content'] );
+							// Perform string replacements in one operation
+							$faq['content'] = str_replace( $search, $replace, $faq['content'] );
 
-							$content .= '<div class="wpcpf-faq wpcpf-faq-' . esc_attr( $faq['type'] ) . '">';
-							$content .= '<div class="wpcpf-faq-title">' . esc_html( $faq['title'] ) . '</div>';
-							$content .= '<div class="wpcpf-faq-content">' . wp_kses_post( do_shortcode( $faq['content'] ) ) . '</div>';
-							$content .= '</div><!-- /wpcpf-faq -->';
+							// Build HTML using sprintf for better performance
+							$faq_items[] = sprintf(
+								'<div class="wpcpf-faq wpcpf-faq-%1$s"><div class="wpcpf-faq-title">%2$s</div><div class="wpcpf-faq-content">%3$s</div></div><!-- /wpcpf-faq -->',
+								esc_attr( $faq['type'] ),
+								esc_html( $faq['title'] ),
+								wp_kses_post( do_shortcode( $faq['content'] ) )
+							);
 						}
 
-						$content .= '</div><!-- /wpcpf-faqs -->';
+						// Concatenate all items at once
+						$content .= '<div class="wpcpf-faqs">' . implode( '', $faq_items ) . '</div><!-- /wpcpf-faqs -->';
 					}
 
 					return apply_filters( 'wpcpf_product_faqs', $content, $product_id );
