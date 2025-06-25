@@ -3,7 +3,7 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.5
+Version: 2.2.6
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
@@ -12,14 +12,14 @@ Requires Plugins: woocommerce
 Requires at least: 4.0
 Tested up to: 6.8
 WC requires at least: 3.0
-WC tested up to: 9.8
+WC tested up to: 9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.5' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.6' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -255,19 +255,26 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 					$active_tab = sanitize_key( $_GET['tab'] ?? 'how' );
 					?>
                     <div class="wpclever_settings_page wrap">
-                        <h1 class="wpclever_settings_page_title"><?php echo esc_html__( 'WPC Product FAQs', 'wpc-product-faqs' ) . ' ' . esc_html( WPCPF_VERSION ); ?></h1>
-                        <div class="wpclever_settings_page_desc about-text">
-                            <p>
-								<?php printf( /* translators: stars */ esc_html__( 'Thank you for using our plugin! If you are satisfied, please reward it a full five-star %s rating.', 'wpc-product-faqs' ), '<span style="color:#ffb900">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' ); ?>
-                                <br/>
-                                <a href="<?php echo esc_url( WPCPF_REVIEWS ); ?>"
-                                   target="_blank"><?php esc_html_e( 'Reviews', 'wpc-product-faqs' ); ?></a> |
-                                <a href="<?php echo esc_url( WPCPF_CHANGELOG ); ?>"
-                                   target="_blank"><?php esc_html_e( 'Changelog', 'wpc-product-faqs' ); ?></a> |
-                                <a href="<?php echo esc_url( WPCPF_DISCUSSION ); ?>"
-                                   target="_blank"><?php esc_html_e( 'Discussion', 'wpc-product-faqs' ); ?></a>
-                            </p>
+                        <div class="wpclever_settings_page_header">
+                            <a class="wpclever_settings_page_header_logo" href="https://wpclever.net/"
+                               target="_blank" title="Visit wpclever.net"></a>
+                            <div class="wpclever_settings_page_header_text">
+                                <div class="wpclever_settings_page_title"><?php echo esc_html__( 'WPC Product FAQs', 'wpc-product-faqs' ) . ' ' . esc_html( WPCPF_VERSION ); ?></div>
+                                <div class="wpclever_settings_page_desc about-text">
+                                    <p>
+										<?php printf( /* translators: stars */ esc_html__( 'Thank you for using our plugin! If you are satisfied, please reward it a full five-star %s rating.', 'wpc-product-faqs' ), '<span style="color:#ffb900">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' ); ?>
+                                        <br/>
+                                        <a href="<?php echo esc_url( WPCPF_REVIEWS ); ?>"
+                                           target="_blank"><?php esc_html_e( 'Reviews', 'wpc-product-faqs' ); ?></a> |
+                                        <a href="<?php echo esc_url( WPCPF_CHANGELOG ); ?>"
+                                           target="_blank"><?php esc_html_e( 'Changelog', 'wpc-product-faqs' ); ?></a> |
+                                        <a href="<?php echo esc_url( WPCPF_DISCUSSION ); ?>"
+                                           target="_blank"><?php esc_html_e( 'Discussion', 'wpc-product-faqs' ); ?></a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+                        <h2></h2>
                         <div class="wpclever_settings_page_nav">
                             <h2 class="nav-tab-wrapper">
                                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpclever-wpcpf&tab=how' ) ); ?>"

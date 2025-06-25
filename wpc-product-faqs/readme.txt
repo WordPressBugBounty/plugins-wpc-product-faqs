@@ -3,8 +3,8 @@ Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, wpc, faqs, faq
 Tested up to: 6.8
-Version: 2.2.5
-Stable tag: 2.2.5
+Version: 2.2.6
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,10 @@ Please try other plugins from us:
 5. When adding/editing the product you can choose the FAQs tab then add some global/custom FAQs as you want
 
 == Changelog ==
+
+= 2.2.6 =
+* Fixed: Minor CSS/JS issues in the backend
+* Updated: Compatible with WP 6.8 & Woo 9.9
 
 = 2.2.5 =
 * Updated: Optimized the code
