@@ -3,7 +3,7 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.8
+Version: 2.2.9
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
@@ -12,14 +12,14 @@ Requires Plugins: woocommerce
 Requires at least: 4.0
 Tested up to: 6.9
 WC requires at least: 3.0
-WC tested up to: 10.4
+WC tested up to: 10.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.8' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.9' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -29,6 +29,7 @@ defined( 'ABSPATH' ) || exit;
 ! defined( 'WPCPF_DISCUSSION' ) && define( 'WPCPF_DISCUSSION', 'https://wordpress.org/support/plugin/wpc-product-faqs' );
 ! defined( 'WPC_URI' ) && define( 'WPC_URI', WPCPF_URI );
 
+include 'includes/log/wpc-log.php';
 include 'includes/dashboard/wpc-dashboard.php';
 include 'includes/kit/wpc-kit.php';
 include 'includes/hpos.php';
