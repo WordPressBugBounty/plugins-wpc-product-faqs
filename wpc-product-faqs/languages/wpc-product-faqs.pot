@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPC Product FAQs for WooCommerce 2.2.9\n"
+"Project-Id-Version: WPC Product FAQs for WooCommerce 2.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpc-product-faqs\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-17T03:46:54+00:00\n"
+"POT-Creation-Date: 2026-06-07T04:23:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wpc-product-faqs\n"
@@ -39,41 +39,41 @@ msgstr ""
 msgid "https://wpclever.net"
 msgstr ""
 
-#: wpc-product-faqs.php:96
+#: wpc-product-faqs.php:94
 msgctxt "Post Type General Name"
 msgid "Product FAQs"
 msgstr ""
 
-#: wpc-product-faqs.php:97
+#: wpc-product-faqs.php:95
 msgctxt "Post Type Singular Name"
 msgid "Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:98
+#: wpc-product-faqs.php:96
 msgid "Add New Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:99
+#: wpc-product-faqs.php:97
 msgid "Add New"
 msgstr ""
 
-#: wpc-product-faqs.php:100
+#: wpc-product-faqs.php:98
 msgid "Edit Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:101
+#: wpc-product-faqs.php:99
 msgid "Update Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:102
+#: wpc-product-faqs.php:100
 msgid "Search Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:106
+#: wpc-product-faqs.php:104
 msgid "Product FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:133
+#: wpc-product-faqs.php:131
 msgid "Configuration"
 msgstr ""
 
@@ -89,98 +89,98 @@ msgstr ""
 msgid "All products"
 msgstr ""
 
-#: wpc-product-faqs.php:223
-#: wpc-product-faqs.php:283
+#: wpc-product-faqs.php:231
+#: wpc-product-faqs.php:291
 msgid "How to use?"
 msgstr ""
 
-#: wpc-product-faqs.php:239
+#: wpc-product-faqs.php:247
 msgid "Community support"
 msgstr ""
 
-#: wpc-product-faqs.php:249
-#: wpc-product-faqs.php:263
+#: wpc-product-faqs.php:257
+#: wpc-product-faqs.php:271
 msgid "WPC Product FAQs"
 msgstr ""
 
-#: wpc-product-faqs.php:249
+#: wpc-product-faqs.php:257
 msgid "Product FAQs"
 msgstr ""
 
 #. translators: stars
-#: wpc-product-faqs.php:266
+#: wpc-product-faqs.php:274
 #, php-format
 msgid "Thank you for using our plugin! If you are satisfied, please reward it a full five-star %s rating."
 msgstr ""
 
-#: wpc-product-faqs.php:269
+#: wpc-product-faqs.php:277
 msgid "Reviews"
 msgstr ""
 
-#: wpc-product-faqs.php:271
+#: wpc-product-faqs.php:279
 msgid "Changelog"
 msgstr ""
 
-#: wpc-product-faqs.php:273
+#: wpc-product-faqs.php:281
 msgid "Discussion"
 msgstr ""
 
-#: wpc-product-faqs.php:287
+#: wpc-product-faqs.php:295
 msgid "Global FAQs"
 msgstr ""
 
-#: wpc-product-faqs.php:291
+#: wpc-product-faqs.php:299
 msgid "Essential Kit"
 msgstr ""
 
-#: wpc-product-faqs.php:299
+#: wpc-product-faqs.php:307
 msgid "1. Global FAQs: Switch to Global FAQs tab to add the FAQs then you can use these FAQs in each product."
 msgstr ""
 
-#: wpc-product-faqs.php:302
+#: wpc-product-faqs.php:310
 msgid "2. Product basis FAQs: When adding/editing the product you can choose the FAQs tab then add some global/custom FAQs as you want."
 msgstr ""
 
-#: wpc-product-faqs.php:334
-#: wpc-product-faqs.php:406
+#: wpc-product-faqs.php:344
+#: wpc-product-faqs.php:428
 msgid "FAQ title"
 msgstr ""
 
-#: wpc-product-faqs.php:393
+#: wpc-product-faqs.php:415
 msgid "Move"
 msgstr ""
 
-#: wpc-product-faqs.php:396
+#: wpc-product-faqs.php:418
 msgid "Remove"
 msgstr ""
 
-#: wpc-product-faqs.php:459
+#: wpc-product-faqs.php:481
 msgid "Global FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:460
+#: wpc-product-faqs.php:482
 msgid "Custom FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:463
+#: wpc-product-faqs.php:485
 msgid "+ Add new FAQ"
 msgstr ""
 
-#: wpc-product-faqs.php:504
-#: wpc-product-faqs.php:692
+#: wpc-product-faqs.php:526
+#: wpc-product-faqs.php:714
 msgid "FAQs"
 msgstr ""
 
-#: wpc-product-faqs.php:715
+#: wpc-product-faqs.php:737
 msgid "Product wasn't returned."
 msgstr ""
 
-#: wpc-product-faqs.php:726
+#: wpc-product-faqs.php:748
 msgid "Manage Global FAQs"
 msgstr ""
 
 #. translators: shortcode
-#: wpc-product-faqs.php:729
+#: wpc-product-faqs.php:751
 #, php-format
 msgid "You can use the shortcode %s to show this product FAQs."
 msgstr ""

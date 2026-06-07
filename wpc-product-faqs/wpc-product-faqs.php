@@ -3,23 +3,22 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.2.9
+Version: 2.3.0
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
 Domain Path: /languages/
 Requires Plugins: woocommerce
-Requires at least: 4.0
-Tested up to: 6.9
+Tested up to: 7.0
 WC requires at least: 3.0
-WC tested up to: 10.6
+WC tested up to: 10.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.2.9' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.3.0' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -27,12 +26,14 @@ defined( 'ABSPATH' ) || exit;
 ! defined( 'WPCPF_REVIEWS' ) && define( 'WPCPF_REVIEWS', 'https://wordpress.org/support/plugin/wpc-product-faqs/reviews/' );
 ! defined( 'WPCPF_CHANGELOG' ) && define( 'WPCPF_CHANGELOG', 'https://wordpress.org/plugins/wpc-product-faqs/#developers' );
 ! defined( 'WPCPF_DISCUSSION' ) && define( 'WPCPF_DISCUSSION', 'https://wordpress.org/support/plugin/wpc-product-faqs' );
-! defined( 'WPC_URI' ) && define( 'WPC_URI', WPCPF_URI );
 
-include 'includes/log/wpc-log.php';
-include 'includes/dashboard/wpc-dashboard.php';
-include 'includes/kit/wpc-kit.php';
-include 'includes/hpos.php';
+// WPC Core
+require_once __DIR__ . '/includes/wpc-core/wpc-core.php';
+wpc_core_register( [
+        'file'    => __FILE__,
+        'version' => WPCPF_VERSION,
+        'prefix'  => 'wpcpf',
+] );
 
 if ( ! function_exists( 'wpcpf_init' ) ) {
     add_action( 'plugins_loaded', 'wpcpf_init', 11 );
@@ -89,9 +90,6 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function init() {
-                    // load text-domain
-                    load_plugin_textdomain( 'wpc-product-faqs', false, basename( WPCPF_DIR ) . '/languages/' );
-
                     $labels = [
                             'name'          => _x( 'Product FAQs', 'Post Type General Name', 'wpc-product-faqs' ),
                             'singular_name' => _x( 'Product FAQ', 'Post Type Singular Name', 'wpc-product-faqs' ),
@@ -140,6 +138,8 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                     $post_id = $post->ID;
                     $type    = get_post_meta( $post_id, 'type', true ) ?: 'all';
                     $terms   = get_post_meta( $post_id, 'terms', true ) ?: [];
+
+                    wp_nonce_field( 'wpcpf_save_product_faq', 'wpcpf_nonce' );
                     ?>
                     <table class="wpcpf_configuration_table">
                         <tr class="wpcpf_configuration_tr">
@@ -153,7 +153,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                                         <option value="none" <?php selected( $type, 'none' ); ?>><?php esc_html_e( 'None', 'wpc-product-faqs' ); ?></option>
                                         <option value="all" <?php selected( $type, 'all' ); ?>><?php esc_html_e( 'All products', 'wpc-product-faqs' ); ?></option>
                                         <?php
-                                        $taxonomies = get_object_taxonomies( 'product', 'objects' ); //$taxonomies = get_taxonomies( [ 'object_type' => [ 'product' ] ], 'objects' );
+                                        $taxonomies = get_object_taxonomies( 'product', 'objects' );
 
                                         foreach ( $taxonomies as $taxonomy ) {
                                             echo '<option value="' . esc_attr( $taxonomy->name ) . '" ' . ( $type === $taxonomy->name ? 'selected' : '' ) . '>' . esc_html( $taxonomy->label ) . '</option>';
@@ -189,12 +189,17 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function save_product_faq( $post_id ) {
+                    if ( ! isset( $_POST['wpcpf_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpcpf_nonce'] ) ), 'wpcpf_save_product_faq' ) ) {
+                        return;
+                    }
+
                     if ( isset( $_POST['wpcpf_type'] ) ) {
-                        update_post_meta( $post_id, 'type', sanitize_text_field( $_POST['wpcpf_type'] ) );
+                        update_post_meta( $post_id, 'type', sanitize_text_field( wp_unslash( $_POST['wpcpf_type'] ) ) );
                     }
 
                     if ( isset( $_POST['wpcpf_terms'] ) ) {
-                        update_post_meta( $post_id, 'terms', self::sanitize_array( $_POST['wpcpf_terms'] ) );
+                        $wpcpf_terms = array_map( 'sanitize_text_field', wp_unslash( $_POST['wpcpf_terms'] ) );
+                        update_post_meta( $post_id, 'terms', $wpcpf_terms );
                     }
                 }
 
@@ -210,6 +215,9 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                             'wc-enhanced-select',
                             'selectWoo'
                     ], WPCPF_VERSION, true );
+                    wp_localize_script( 'wpcpf-backend', 'wpcpf_vars', [
+                            'nonce' => wp_create_nonce( 'wpcpf_nonce' ),
+                    ] );
                 }
 
                 function action_links( $links, $file ) {
@@ -253,7 +261,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function admin_menu_content() {
-                    $active_tab = sanitize_key( $_GET['tab'] ?? 'how' );
+                    $active_tab = sanitize_key( $_GET['tab'] ?? 'how' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only tab display, no data mutation
                     ?>
                     <div class="wpclever_settings_page wrap">
                         <div class="wpclever_settings_page_header">
@@ -329,6 +337,8 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function ajax_add_faq() {
+                    check_ajax_referer( 'wpcpf_nonce' );
+
                     self::faq( '', [
                             'type'    => sanitize_key( $_POST['type'] ?? 'custom' ),
                             'title'   => esc_html__( 'FAQ title', 'wpc-product-faqs' ),
@@ -340,11 +350,17 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function ajax_search_faq() {
+                    check_ajax_referer( 'wpcpf_nonce' );
+
                     $return = [];
+
+                    if ( ! isset( $_GET['q'] ) ) {
+                        wp_send_json( $return );
+                    }
 
                     $search_results = new WP_Query( [
                             'post_type'           => 'wpc_product_faq',
-                            's'                   => sanitize_text_field( $_GET['q'] ),
+                            's'                   => sanitize_text_field( wp_unslash( $_GET['q'] ) ),
                             'post_status'         => 'publish',
                             'ignore_sticky_posts' => 1,
                             'posts_per_page'      => 50
@@ -362,15 +378,21 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function ajax_search_term() {
+                    check_ajax_referer( 'wpcpf_nonce' );
+
                     $return = [];
 
+                    if ( ! isset( $_REQUEST['taxonomy'] ) || ! isset( $_REQUEST['q'] ) ) {
+                        wp_send_json( $return );
+                    }
+
                     $args = [
-                            'taxonomy'   => sanitize_text_field( $_REQUEST['taxonomy'] ),
+                            'taxonomy'   => sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ),
                             'orderby'    => 'id',
                             'order'      => 'ASC',
                             'hide_empty' => false,
                             'fields'     => 'all',
-                            'name__like' => sanitize_text_field( $_REQUEST['q'] ),
+                            'name__like' => sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ),
                     ];
 
                     $terms = get_terms( $args );
@@ -518,7 +540,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 
                         if ( $product_id ) {
                             echo '<h2>' . esc_html( $tab['title'] ) . '</h2>';
-                            echo self::product_faqs( $product_id );
+                            echo wp_kses_post( self::product_faqs( $product_id ) );
                         }
                     }
                 }
@@ -745,8 +767,10 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function process_product_meta( $post_id ) {
+                    // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce already verified by WooCommerce in woocommerce_process_product_meta
                     if ( isset( $_POST['wpcpf_faqs'] ) ) {
-                        update_post_meta( $post_id, 'wpcpf_faqs', self::sanitize_array( $_POST['wpcpf_faqs'] ) );
+                        $wpcpf_faqs = wp_kses_post_deep( wp_unslash( $_POST['wpcpf_faqs'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized by wp_kses_post_deep
+                        update_post_meta( $post_id, 'wpcpf_faqs', $wpcpf_faqs );
                     } else {
                         delete_post_meta( $post_id, 'wpcpf_faqs' );
                     }

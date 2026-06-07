@@ -32,6 +32,7 @@
 
     var data = {
       action: 'wpcpf_add_faq', editor: wpcpf_editor, type: wpcpf_type,
+      _ajax_nonce: wpcpf_vars.nonce,
     };
 
     $.post(ajaxurl, data, function(response) {
@@ -73,6 +74,7 @@
         url: ajaxurl, dataType: 'json', delay: 250, data: function(params) {
           return {
             q: params.term, action: 'wpcpf_search_faq',
+            _ajax_nonce: wpcpf_vars.nonce,
           };
         }, processResults: function(data) {
           var options = [];
@@ -100,6 +102,7 @@
         url: ajaxurl, dataType: 'json', delay: 250, data: function(params) {
           return {
             q: params.term, action: 'wpcpf_search_term', taxonomy: type,
+            _ajax_nonce: wpcpf_vars.nonce,
           };
         }, processResults: function(data) {
           var options = [];
