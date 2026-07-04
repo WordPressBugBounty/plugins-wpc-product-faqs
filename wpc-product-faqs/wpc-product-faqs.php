@@ -3,7 +3,7 @@
 Plugin Name: WPC Product FAQs for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: Ultimate solution to manage WooCommerce product FAQs.
-Version: 2.3.0
+Version: 2.3.1
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-product-faqs
@@ -11,14 +11,14 @@ Domain Path: /languages/
 Requires Plugins: woocommerce
 Tested up to: 7.0
 WC requires at least: 3.0
-WC tested up to: 10.8
+WC tested up to: 10.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.3.0' );
+! defined( 'WPCPF_VERSION' ) && define( 'WPCPF_VERSION', '2.3.1' );
 ! defined( 'WPCPF_LITE' ) && define( 'WPCPF_LITE', __FILE__ );
 ! defined( 'WPCPF_FILE' ) && define( 'WPCPF_FILE', __FILE__ );
 ! defined( 'WPCPF_URI' ) && define( 'WPCPF_URI', plugin_dir_url( __FILE__ ) );
@@ -194,11 +194,11 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                     }
 
                     if ( isset( $_POST['wpcpf_type'] ) ) {
-                        update_post_meta( $post_id, 'type', sanitize_text_field( wp_unslash( $_POST['wpcpf_type'] ) ) );
+                        update_post_meta( $post_id, 'type', sanitize_text_field( wp_unslash( $_POST['wpcpf_type'] ?? '' ) ) );
                     }
 
                     if ( isset( $_POST['wpcpf_terms'] ) ) {
-                        $wpcpf_terms = array_map( 'sanitize_text_field', wp_unslash( $_POST['wpcpf_terms'] ) );
+                        $wpcpf_terms = array_map( 'sanitize_text_field', wp_unslash( $_POST['wpcpf_terms'] ?? [] ) );
                         update_post_meta( $post_id, 'terms', $wpcpf_terms );
                     }
                 }
@@ -261,7 +261,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 }
 
                 function admin_menu_content() {
-                    $active_tab = sanitize_key( $_GET['tab'] ?? 'how' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only tab display, no data mutation
+                    $active_tab = sanitize_key( wp_unslash( $_GET['tab'] ?? 'how' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only tab display, no data mutation
                     ?>
                     <div class="wpclever_settings_page wrap">
                         <div class="wpclever_settings_page_header">
@@ -340,9 +340,9 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                     check_ajax_referer( 'wpcpf_nonce' );
 
                     self::faq( '', [
-                            'type'    => sanitize_key( $_POST['type'] ?? 'custom' ),
+                            'type'    => sanitize_key( wp_unslash( $_POST['type'] ?? 'custom' ) ),
                             'title'   => esc_html__( 'FAQ title', 'wpc-product-faqs' ),
-                            'editor'  => sanitize_key( $_POST['editor'] ?? '' ),
+                            'editor'  => sanitize_key( wp_unslash( $_POST['editor'] ?? '' ) ),
                             'content' => ''
                     ], true );
 
@@ -360,7 +360,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
 
                     $search_results = new WP_Query( [
                             'post_type'           => 'wpc_product_faq',
-                            's'                   => sanitize_text_field( wp_unslash( $_GET['q'] ) ),
+                            's'                   => sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ),
                             'post_status'         => 'publish',
                             'ignore_sticky_posts' => 1,
                             'posts_per_page'      => 50
@@ -387,12 +387,12 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                     }
 
                     $args = [
-                            'taxonomy'   => sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ),
+                            'taxonomy'   => sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ?? '' ) ),
                             'orderby'    => 'id',
                             'order'      => 'ASC',
                             'hide_empty' => false,
                             'fields'     => 'all',
-                            'name__like' => sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ),
+                            'name__like' => sanitize_text_field( wp_unslash( $_REQUEST['q'] ?? '' ) ),
                     ];
 
                     $terms = get_terms( $args );
@@ -769,7 +769,7 @@ if ( ! function_exists( 'wpcpf_init' ) ) {
                 function process_product_meta( $post_id ) {
                     // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce already verified by WooCommerce in woocommerce_process_product_meta
                     if ( isset( $_POST['wpcpf_faqs'] ) ) {
-                        $wpcpf_faqs = wp_kses_post_deep( wp_unslash( $_POST['wpcpf_faqs'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized by wp_kses_post_deep
+                        $wpcpf_faqs = wp_kses_post_deep( wp_unslash( $_POST['wpcpf_faqs'] ?? '' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized by wp_kses_post_deep
                         update_post_meta( $post_id, 'wpcpf_faqs', $wpcpf_faqs );
                     } else {
                         delete_post_meta( $post_id, 'wpcpf_faqs' );
